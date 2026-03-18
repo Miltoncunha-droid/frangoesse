@@ -1,0 +1,1663 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Frango ESSE — Projeto Ambiental | Dashboard Executivo</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --verde-escuro: #1a3d2b;
+    --verde-medio: #2d6a4f;
+    --verde-claro: #40916c;
+    --verde-suave: #74c69d;
+    --verde-menta: #b7e4c7;
+    --verde-palido: #d8f3dc;
+    --ouro: #e8a020;
+    --ouro-claro: #f4c560;
+    --branco: #f9fafb;
+    --cinza-claro: #edf2f0;
+    --cinza: #8a9e96;
+    --texto-escuro: #0f2318;
+    --texto-medio: #2a4a38;
+    --vermelho: #c0392b;
+    --amarelo: #e67e22;
+    --azul: #1a6b9a;
+    --sombra: 0 4px 24px rgba(26,61,43,0.13);
+    --sombra-hover: 0 8px 36px rgba(26,61,43,0.22);
+    --radius: 14px;
+    --radius-sm: 8px;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Lato', sans-serif;
+    background: linear-gradient(135deg, #0f2318 0%, #1a3d2b 40%, #14301f 100%);
+    min-height: 100vh;
+    color: var(--branco);
+  }
+
+  /* HEADER */
+  .header {
+    background: linear-gradient(90deg, #0c1f13 0%, #1a3d2b 60%, #1f4d35 100%);
+    border-bottom: 3px solid var(--verde-claro);
+    padding: 0 40px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 88px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 4px 32px rgba(0,0,0,0.4);
+  }
+
+  .header-left {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+  }
+
+  .logo-esse {
+    width: 70px;
+    height: 70px;
+    background: radial-gradient(circle, #cc1111 0%, #9b0e0e 100%);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 20px rgba(200,20,20,0.4);
+    position: relative;
+    overflow: hidden;
+    flex-shrink: 0;
+  }
+
+  .logo-esse::before {
+    content: '';
+    position: absolute;
+    inset: 4px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 35% 35%, rgba(255,255,255,0.25), transparent 60%);
+  }
+
+  .logo-esse-text {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 900;
+    font-size: 18px;
+    color: #FFD700;
+    text-shadow: 1px 1px 3px rgba(0,0,0,0.6);
+    letter-spacing: -0.5px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .header-title {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .header-title h1 {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 800;
+    font-size: 20px;
+    color: var(--branco);
+    letter-spacing: 0.5px;
+  }
+
+  .header-title h1 span {
+    color: var(--verde-suave);
+  }
+
+  .header-title p {
+    font-size: 12px;
+    color: var(--cinza);
+    font-weight: 400;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    margin-top: 2px;
+  }
+
+  .header-right {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+  }
+
+  .header-badge {
+    background: rgba(64,145,108,0.2);
+    border: 1px solid var(--verde-claro);
+    border-radius: 20px;
+    padding: 6px 16px;
+    font-size: 11px;
+    color: var(--verde-suave);
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+
+  .header-date {
+    font-size: 12px;
+    color: var(--cinza);
+  }
+
+  /* NAVIGATION TABS */
+  .nav-tabs {
+    background: rgba(15,35,24,0.9);
+    border-bottom: 1px solid rgba(64,145,108,0.3);
+    padding: 0 40px;
+    display: flex;
+    gap: 4px;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+
+  .nav-tabs::-webkit-scrollbar { display: none; }
+
+  .tab-btn {
+    background: transparent;
+    border: none;
+    color: var(--cinza);
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 600;
+    font-size: 12px;
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
+    padding: 16px 20px;
+    cursor: pointer;
+    position: relative;
+    white-space: nowrap;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .tab-btn .tab-icon {
+    font-size: 14px;
+  }
+
+  .tab-btn:hover {
+    color: var(--verde-suave);
+    background: rgba(64,145,108,0.1);
+  }
+
+  .tab-btn.active {
+    color: var(--verde-suave);
+  }
+
+  .tab-btn.active::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--verde-claro), var(--verde-suave));
+    border-radius: 3px 3px 0 0;
+  }
+
+  /* MAIN CONTENT */
+  .main {
+    padding: 32px 40px;
+    max-width: 1400px;
+    margin: 0 auto;
+  }
+
+  /* SECTION PANELS */
+  .tab-panel {
+    display: none;
+    animation: fadeIn 0.4s ease;
+  }
+
+  .tab-panel.active { display: block; }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(12px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* SECTION HEADERS */
+  .section-header {
+    margin-bottom: 28px;
+  }
+
+  .section-header h2 {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 800;
+    font-size: 26px;
+    color: var(--branco);
+  }
+
+  .section-header h2 span {
+    color: var(--verde-suave);
+  }
+
+  .section-header p {
+    color: var(--cinza);
+    font-size: 14px;
+    margin-top: 6px;
+  }
+
+  .section-divider {
+    height: 2px;
+    background: linear-gradient(90deg, var(--verde-claro), transparent);
+    margin: 12px 0 28px;
+    border-radius: 2px;
+  }
+
+  /* CARDS */
+  .card {
+    background: rgba(26,61,43,0.6);
+    border: 1px solid rgba(64,145,108,0.25);
+    border-radius: var(--radius);
+    padding: 24px;
+    backdrop-filter: blur(10px);
+    transition: all 0.3s ease;
+  }
+
+  .card:hover {
+    border-color: rgba(64,145,108,0.5);
+    box-shadow: var(--sombra-hover);
+    transform: translateY(-2px);
+  }
+
+  .card-title {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+    font-size: 13px;
+    color: var(--verde-suave);
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  /* GRID LAYOUTS */
+  .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; margin-bottom: 24px; }
+  .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-bottom: 24px; }
+  .grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; margin-bottom: 24px; }
+  .grid-1-2 { display: grid; grid-template-columns: 1fr 2fr; gap: 20px; margin-bottom: 24px; }
+  .grid-2-1 { display: grid; grid-template-columns: 2fr 1fr; gap: 20px; margin-bottom: 24px; }
+
+  /* KPI CARDS */
+  .kpi-card {
+    background: rgba(26,61,43,0.7);
+    border: 1px solid rgba(64,145,108,0.3);
+    border-radius: var(--radius);
+    padding: 22px 24px;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s ease;
+  }
+
+  .kpi-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+  }
+
+  .kpi-card.verde::before { background: linear-gradient(90deg, var(--verde-claro), var(--verde-suave)); }
+  .kpi-card.ouro::before { background: linear-gradient(90deg, var(--ouro), var(--ouro-claro)); }
+  .kpi-card.vermelho::before { background: linear-gradient(90deg, var(--vermelho), #e74c3c); }
+  .kpi-card.azul::before { background: linear-gradient(90deg, var(--azul), #2980b9); }
+  .kpi-card.amarelo::before { background: linear-gradient(90deg, var(--amarelo), #f39c12); }
+
+  .kpi-card:hover {
+    border-color: rgba(64,145,108,0.5);
+    transform: translateY(-3px);
+    box-shadow: var(--sombra-hover);
+  }
+
+  .kpi-label {
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--cinza);
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+    margin-bottom: 8px;
+  }
+
+  .kpi-value {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 800;
+    font-size: 32px;
+    line-height: 1;
+    margin-bottom: 6px;
+  }
+
+  .kpi-value.verde { color: var(--verde-suave); }
+  .kpi-value.ouro { color: var(--ouro-claro); }
+  .kpi-value.vermelho { color: #e74c3c; }
+  .kpi-value.azul { color: #5dade2; }
+  .kpi-value.amarelo { color: #f4c460; }
+
+  .kpi-sub {
+    font-size: 12px;
+    color: var(--cinza);
+  }
+
+  .kpi-icon {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    font-size: 28px;
+    opacity: 0.35;
+  }
+
+  /* STATUS BADGE */
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+  }
+
+  .badge.ok { background: rgba(64,145,108,0.2); color: var(--verde-suave); border: 1px solid rgba(64,145,108,0.4); }
+  .badge.urgente { background: rgba(192,57,43,0.2); color: #e74c3c; border: 1px solid rgba(192,57,43,0.4); }
+  .badge.atencao { background: rgba(230,126,34,0.2); color: #f39c12; border: 1px solid rgba(230,126,34,0.4); }
+  .badge.pendente { background: rgba(26,107,154,0.2); color: #5dade2; border: 1px solid rgba(26,107,154,0.4); }
+
+  /* TABLE */
+  .table-wrap { overflow-x: auto; border-radius: var(--radius); }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+  }
+
+  thead tr {
+    background: rgba(64,145,108,0.25);
+  }
+
+  thead th {
+    padding: 14px 16px;
+    text-align: left;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+    font-size: 11px;
+    color: var(--verde-suave);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    border-bottom: 1px solid rgba(64,145,108,0.3);
+  }
+
+  tbody tr {
+    border-bottom: 1px solid rgba(64,145,108,0.1);
+    transition: background 0.2s;
+  }
+
+  tbody tr:hover { background: rgba(64,145,108,0.1); }
+
+  tbody td {
+    padding: 13px 16px;
+    color: #d0e8dc;
+    vertical-align: top;
+    line-height: 1.5;
+  }
+
+  tbody td .unit-num {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 800;
+    font-size: 16px;
+    color: var(--verde-suave);
+    display: block;
+  }
+
+  /* PROGRESS BAR */
+  .progress-bar-wrap { margin: 6px 0; }
+  .progress-label { display: flex; justify-content: space-between; font-size: 12px; margin-bottom: 6px; color: var(--cinza); }
+  .progress-bar { height: 8px; background: rgba(255,255,255,0.08); border-radius: 10px; overflow: hidden; }
+  .progress-fill { height: 100%; border-radius: 10px; transition: width 1s ease; }
+  .progress-fill.verde { background: linear-gradient(90deg, var(--verde-claro), var(--verde-suave)); }
+  .progress-fill.vermelho { background: linear-gradient(90deg, var(--vermelho), #e74c3c); }
+  .progress-fill.ouro { background: linear-gradient(90deg, var(--ouro), var(--ouro-claro)); }
+
+  /* TIMELINE */
+  .timeline { position: relative; padding-left: 32px; }
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 12px;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: linear-gradient(to bottom, var(--verde-claro), rgba(64,145,108,0.1));
+  }
+
+  .timeline-item { position: relative; margin-bottom: 24px; }
+  .timeline-dot {
+    position: absolute;
+    left: -26px;
+    top: 4px;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    border: 2px solid var(--verde-claro);
+    background: var(--verde-escuro);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .timeline-dot.filled { background: var(--verde-claro); }
+  .timeline-dot.ouro { border-color: var(--ouro); background: var(--ouro); }
+
+  .timeline-phase {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+    font-size: 14px;
+    color: var(--branco);
+    margin-bottom: 4px;
+  }
+
+  .timeline-desc {
+    font-size: 13px;
+    color: var(--cinza);
+    line-height: 1.6;
+  }
+
+  .timeline-date {
+    font-size: 11px;
+    color: var(--verde-suave);
+    font-weight: 600;
+    margin-top: 4px;
+    display: inline-block;
+    background: rgba(64,145,108,0.15);
+    padding: 2px 8px;
+    border-radius: 10px;
+  }
+
+  /* RISK METER */
+  .risk-item {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 14px 0;
+    border-bottom: 1px solid rgba(64,145,108,0.1);
+  }
+  .risk-item:last-child { border-bottom: none; }
+  .risk-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+  .risk-dot.alto { background: #e74c3c; box-shadow: 0 0 8px rgba(231,76,60,0.5); }
+  .risk-dot.medio { background: #f39c12; box-shadow: 0 0 8px rgba(243,156,18,0.5); }
+  .risk-dot.baixo { background: var(--verde-claro); box-shadow: 0 0 8px rgba(64,145,108,0.5); }
+
+  .risk-text { flex: 1; font-size: 13px; color: #d0e8dc; }
+  .risk-nivel {
+    font-size: 11px;
+    font-weight: 700;
+    padding: 3px 10px;
+    border-radius: 10px;
+  }
+  .risk-nivel.alto { background: rgba(231,76,60,0.2); color: #e74c3c; }
+  .risk-nivel.medio { background: rgba(243,156,18,0.2); color: #f39c12; }
+  .risk-nivel.baixo { background: rgba(64,145,108,0.2); color: var(--verde-suave); }
+
+  /* PRICE TABLE */
+  .price-tier {
+    background: rgba(26,61,43,0.5);
+    border: 1px solid rgba(64,145,108,0.2);
+    border-radius: var(--radius);
+    padding: 24px;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .price-tier.destaque {
+    border-color: var(--ouro);
+    background: rgba(232,160,32,0.07);
+  }
+
+  .price-tier.destaque::before {
+    content: 'RECOMENDADO';
+    position: absolute;
+    top: 14px;
+    right: -26px;
+    background: var(--ouro);
+    color: var(--texto-escuro);
+    font-size: 9px;
+    font-weight: 800;
+    padding: 4px 32px;
+    transform: rotate(35deg);
+    letter-spacing: 1px;
+  }
+
+  .price-tier:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--sombra-hover);
+  }
+
+  .price-tier-label {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 800;
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 8px;
+  }
+
+  .price-value {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 900;
+    font-size: 34px;
+    color: var(--branco);
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+
+  .price-period {
+    font-size: 12px;
+    color: var(--cinza);
+    margin-bottom: 16px;
+  }
+
+  .price-features { list-style: none; }
+  .price-features li {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    font-size: 12.5px;
+    color: #bdd8ca;
+    padding: 5px 0;
+    border-bottom: 1px solid rgba(64,145,108,0.08);
+  }
+  .price-features li:last-child { border-bottom: none; }
+  .price-features li::before {
+    content: '✓';
+    color: var(--verde-suave);
+    font-weight: 700;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+
+  /* CONDICIONANTE TABLE */
+  .cond-row { cursor: pointer; }
+  .cond-row:hover td { background: rgba(64,145,108,0.08) !important; }
+  .expand-icon { float: right; transition: transform 0.2s; color: var(--cinza); }
+  .cond-detail {
+    display: none;
+    padding: 12px 16px;
+    background: rgba(15,35,24,0.5);
+    border-top: 1px solid rgba(64,145,108,0.15);
+  }
+  .cond-detail.open { display: block; }
+
+  /* CHECKLIST */
+  .checklist-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 12px 0;
+    border-bottom: 1px solid rgba(64,145,108,0.1);
+  }
+  .checklist-item:last-child { border-bottom: none; }
+  .check-box {
+    width: 20px;
+    height: 20px;
+    border-radius: 4px;
+    border: 2px solid rgba(64,145,108,0.4);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    margin-top: 1px;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .check-box:hover { border-color: var(--verde-claro); }
+  .check-box.checked { background: var(--verde-claro); border-color: var(--verde-claro); }
+  .check-box.checked::after { content: '✓'; color: white; font-size: 11px; font-weight: 700; }
+
+  .checklist-text { flex: 1; }
+  .checklist-title { font-size: 13.5px; color: var(--branco); font-weight: 500; }
+  .checklist-sub { font-size: 12px; color: var(--cinza); margin-top: 2px; }
+
+  /* CHARTS */
+  .chart-bar-group { display: flex; flex-direction: column; gap: 14px; }
+  .chart-bar-item {}
+  .chart-bar-label { font-size: 12px; color: var(--cinza); margin-bottom: 5px; display: flex; justify-content: space-between; }
+  .chart-bar-track { height: 10px; background: rgba(255,255,255,0.06); border-radius: 10px; overflow: hidden; }
+  .chart-bar-fill { height: 100%; border-radius: 10px; }
+
+  /* BENCHMARK TABLE */
+  .bench-row {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: 12px;
+    align-items: center;
+    padding: 14px 0;
+    border-bottom: 1px solid rgba(64,145,108,0.1);
+    font-size: 13px;
+  }
+  .bench-row.header {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--verde-suave);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    border-bottom: 2px solid rgba(64,145,108,0.3);
+    padding-bottom: 10px;
+  }
+  .bench-row:last-child { border-bottom: none; }
+  .bench-highlight { color: var(--ouro-claro); font-weight: 700; }
+
+  /* ALERT BOX */
+  .alert {
+    border-radius: var(--radius-sm);
+    padding: 14px 18px;
+    margin-bottom: 14px;
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    font-size: 13px;
+  }
+  .alert-icon { font-size: 18px; flex-shrink: 0; margin-top: 1px; }
+  .alert-text { flex: 1; line-height: 1.6; }
+  .alert.urgente { background: rgba(192,57,43,0.15); border: 1px solid rgba(192,57,43,0.3); color: #f1948a; }
+  .alert.atencao { background: rgba(230,126,34,0.15); border: 1px solid rgba(230,126,34,0.3); color: #f8c471; }
+  .alert.info { background: rgba(64,145,108,0.15); border: 1px solid rgba(64,145,108,0.3); color: var(--verde-menta); }
+
+  /* STEP BOXES */
+  .step-box {
+    background: rgba(26,61,43,0.5);
+    border: 1px solid rgba(64,145,108,0.2);
+    border-radius: var(--radius);
+    padding: 20px 22px;
+    position: relative;
+  }
+  .step-number {
+    position: absolute;
+    top: -14px;
+    left: 20px;
+    background: var(--verde-claro);
+    color: white;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 800;
+    font-size: 12px;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .step-title {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+    font-size: 14px;
+    color: var(--branco);
+    margin-bottom: 8px;
+    margin-top: 4px;
+  }
+  .step-desc {
+    font-size: 13px;
+    color: var(--cinza);
+    line-height: 1.6;
+  }
+  .step-duration {
+    display: inline-block;
+    margin-top: 8px;
+    font-size: 11px;
+    color: var(--verde-suave);
+    background: rgba(64,145,108,0.15);
+    padding: 3px 10px;
+    border-radius: 10px;
+    font-weight: 600;
+  }
+
+  /* FOOTER */
+  .dash-footer {
+    text-align: center;
+    padding: 28px 40px;
+    color: var(--cinza);
+    font-size: 12px;
+    border-top: 1px solid rgba(64,145,108,0.15);
+    margin-top: 40px;
+  }
+  .dash-footer span { color: var(--verde-suave); font-weight: 600; }
+
+  /* RESPONSIVE */
+  @media (max-width: 1024px) {
+    .grid-4 { grid-template-columns: repeat(2,1fr); }
+    .grid-3 { grid-template-columns: repeat(2,1fr); }
+    .grid-1-2, .grid-2-1 { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 640px) {
+    .main { padding: 24px 16px; }
+    .header { padding: 0 16px; }
+    .nav-tabs { padding: 0 16px; }
+    .grid-2, .grid-3, .grid-4 { grid-template-columns: 1fr; }
+  }
+
+  /* Tooltip */
+  [data-tip] { position: relative; cursor: help; }
+  [data-tip]:hover::after {
+    content: attr(data-tip);
+    position: absolute;
+    bottom: 110%;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(15,35,24,0.97);
+    border: 1px solid rgba(64,145,108,0.4);
+    color: var(--verde-menta);
+    padding: 6px 12px;
+    border-radius: 8px;
+    font-size: 11px;
+    white-space: nowrap;
+    z-index: 9999;
+    pointer-events: none;
+  }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="header">
+  <div class="header-left">
+    <img src="data:image/png;base64,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" alt="Frango ESSE" style="height:72px;width:72px;object-fit:contain;border-radius:50%;background:#cc1111;flex-shrink:0;" />
+    <div class="header-title">
+      <h1>Frango <span>ESSE</span> — Projeto Ambiental</h1>
+      <p>Gestão Ambiental Integrada &amp; Licenças &amp; Condicionantes — Retec</p>
+    </div>
+  </div>
+  <div class="header-right">
+    <img src="data:image/png;base64,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" alt="Retec" style="height:44px;object-fit:contain;opacity:1;" />
+    <div style="width:1px;height:36px;background:rgba(64,145,108,0.4);"></div>
+    <div class="header-badge">🌿 ESG Compliance</div>
+    <div class="header-date" id="headerDate"></div>
+  </div>
+</div>
+
+<!-- NAVIGATION -->
+<div class="nav-tabs">
+  <button class="tab-btn active" onclick="switchTab('visao-geral')" id="tab-visao-geral">
+    <span class="tab-icon">📊</span> Visão Geral
+  </button>
+  <button class="tab-btn" onclick="switchTab('unidades')" id="tab-unidades">
+    <span class="tab-icon">🏭</span> Unidades
+  </button>
+  <button class="tab-btn" onclick="switchTab('etapa1')" id="tab-etapa1">
+    <span class="tab-icon">🔍</span> Etapa 1 — Diagnóstico
+  </button>
+  <button class="tab-btn" onclick="switchTab('etapa2')" id="tab-etapa2">
+    <span class="tab-icon">⚙️</span> Etapa 2 — Condicionantes
+  </button>
+  <button class="tab-btn" onclick="switchTab('cronograma')" id="tab-cronograma">
+    <span class="tab-icon">📅</span> Cronograma
+  </button>
+  <button class="tab-btn" onclick="switchTab('precificacao')" id="tab-precificacao">
+    <span class="tab-icon">💰</span> Precificação
+  </button>
+  <button class="tab-btn" onclick="switchTab('benchmark')" id="tab-benchmark">
+    <span class="tab-icon">📈</span> Benchmarks
+  </button>
+</div>
+
+<!-- MAIN -->
+<div class="main">
+
+  <!-- ============ ABA: VISÃO GERAL ============ -->
+  <div class="tab-panel active" id="panel-visao-geral">
+    <div class="section-header">
+      <h2>Visão Geral do <span>Projeto</span></h2>
+      <p>Resumo executivo — diagnóstico e gerenciamento ambiental para o Grupo Frango ESSE</p>
+    </div>
+    <div class="section-divider"></div>
+
+    <!-- KPIs PRINCIPAIS -->
+    <div class="grid-4">
+      <div class="kpi-card verde">
+        <div class="kpi-icon">🏭</div>
+        <div class="kpi-label">Unidades Mapeadas</div>
+        <div class="kpi-value verde">6</div>
+        <div class="kpi-sub">Granjas + Frigorífico</div>
+      </div>
+      <div class="kpi-card vermelho">
+        <div class="kpi-icon">⚠️</div>
+        <div class="kpi-label">Licenças com Problema</div>
+        <div class="kpi-value vermelho">5</div>
+        <div class="kpi-sub">Vencidas / Incompletas / Pendentes</div>
+      </div>
+      <div class="kpi-card ouro">
+        <div class="kpi-icon">📋</div>
+        <div class="kpi-label">Condicionantes (Frigorífico)</div>
+        <div class="kpi-value ouro">34</div>
+        <div class="kpi-sub">Licença válida — 4 anos</div>
+      </div>
+      <div class="kpi-card azul">
+        <div class="kpi-icon">🔍</div>
+        <div class="kpi-label">Unidades p/ Visita</div>
+        <div class="kpi-value azul">5</div>
+        <div class="kpi-sub">Diagnóstico in loco</div>
+      </div>
+    </div>
+
+    <div class="grid-2">
+      <!-- STATUS DAS LICENÇAS -->
+      <div class="card">
+        <div class="card-title">📊 Status das Licenças — Panorama</div>
+        <div class="chart-bar-group">
+          <div class="chart-bar-item">
+            <div class="chart-bar-label"><span>Licença OK (Granja 1)</span><span style="color:var(--verde-suave)">17%</span></div>
+            <div class="chart-bar-track"><div class="chart-bar-fill" style="width:17%;background:linear-gradient(90deg,#40916c,#74c69d)"></div></div>
+          </div>
+          <div class="chart-bar-item">
+            <div class="chart-bar-label"><span>Licença Válida + Condicionantes (Frigorífico)</span><span style="color:var(--ouro-claro)">17%</span></div>
+            <div class="chart-bar-track"><div class="chart-bar-fill" style="width:17%;background:linear-gradient(90deg,#e8a020,#f4c560)"></div></div>
+          </div>
+          <div class="chart-bar-item">
+            <div class="chart-bar-label"><span>Protocolo Incompleto (Granjas 2 e 4)</span><span style="color:#f39c12">33%</span></div>
+            <div class="chart-bar-track"><div class="chart-bar-fill" style="width:33%;background:linear-gradient(90deg,#e67e22,#f39c12)"></div></div>
+          </div>
+          <div class="chart-bar-item">
+            <div class="chart-bar-label"><span>Licença Vencida (Granjas 3 e 5)</span><span style="color:#e74c3c">33%</span></div>
+            <div class="chart-bar-track"><div class="chart-bar-fill" style="width:33%;background:linear-gradient(90deg,#c0392b,#e74c3c)"></div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- RESUMO ALERTAS -->
+      <div class="card">
+        <div class="card-title">🚨 Alertas Críticos</div>
+        <div class="alert urgente">
+          <div class="alert-icon">🔴</div>
+          <div class="alert-text"><strong>Granja 3 (Carolina — Conceição da Feira):</strong> Licença Municipal vencida desde 2019. Necessária renovação imediata + atendimento de condicionantes.</div>
+        </div>
+        <div class="alert urgente">
+          <div class="alert-icon">🔴</div>
+          <div class="alert-text"><strong>Espólio Raimundo (Granja 4):</strong> Protocolo INEMA de 2019 possivelmente arquivado. Verificar status — alta probabilidade de reabertura.</div>
+        </div>
+        <div class="alert atencao">
+          <div class="alert-icon">🟡</div>
+          <div class="alert-text"><strong>Granja 5 (Feira de Santana):</strong> Protocolo de Licença Unificada de 2024 sem movimentação confirmada. Risco de arquivamento.</div>
+        </div>
+        <div class="alert info">
+          <div class="alert-icon">🟢</div>
+          <div class="alert-text"><strong>Frigorífico ESSE (Unidade 6):</strong> Licença válida por 4 anos. Foco: gerenciar as 34 condicionantes dentro do prazo.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ESCOPO DO PROJETO -->
+    <div class="card">
+      <div class="card-title">🎯 Escopo e Divisão do Projeto</div>
+      <div class="grid-2">
+        <div style="border-right:1px solid rgba(64,145,108,0.2);padding-right:24px;">
+          <div style="font-family:'Montserrat',sans-serif;font-weight:700;font-size:14px;color:var(--verde-suave);margin-bottom:12px;">ETAPA 1 — Visitas de Diagnóstico</div>
+          <div style="font-size:13px;color:#bdd8ca;line-height:1.8;">
+            ✦ Levantamento in loco em 5 unidades<br>
+            ✦ Verificação de protocolos e licenças<br>
+            ✦ Análise documental completa<br>
+            ✦ Entrevistas com responsáveis técnicos<br>
+            ✦ Fotografias e georeferenciamento<br>
+            ✦ Relatório de diagnóstico com matriz de risco<br>
+            ✦ Plano de ação priorizado
+          </div>
+          <div style="margin-top:12px;"><span class="badge atencao">⏱ 30-45 dias</span></div>
+        </div>
+        <div style="padding-left:24px;">
+          <div style="font-family:'Montserrat',sans-serif;font-weight:700;font-size:14px;color:var(--ouro-claro);margin-bottom:12px;">ETAPA 2 — Gerenciamento das Condicionantes</div>
+          <div style="font-size:13px;color:#bdd8ca;line-height:1.8;">
+            ✦ Gestão das 34 condicionantes do Frigorífico<br>
+            ✦ Regularização das licenças vencidas<br>
+            ✦ Acompanhamento de protocolos no INEMA<br>
+            ✦ Elaboração de estudos técnicos (EAS, PGRS)<br>
+            ✦ Treinamentos e capacitação de equipe<br>
+            ✦ Relatórios periódicos de conformidade<br>
+            ✦ Suporte a auditorias ambientais
+          </div>
+          <div style="margin-top:12px;"><span class="badge pendente">⏱ 12-24 meses</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ ABA: UNIDADES ============ -->
+  <div class="tab-panel" id="panel-unidades">
+    <div class="section-header">
+      <h2>Mapa de <span>Unidades</span></h2>
+      <p>Detalhamento de cada unidade — situação de licenças, ações necessárias e complexidade</p>
+    </div>
+    <div class="section-divider"></div>
+
+    <div class="table-wrap card" style="padding:0;">
+      <table>
+        <thead>
+          <tr>
+            <th style="width:40px">#</th>
+            <th>Unidade / Responsável</th>
+            <th>Município</th>
+            <th>Situação da Licença</th>
+            <th>Ação Necessária</th>
+            <th>Complexidade</th>
+            <th>Visita</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><span class="unit-num">1</span></td>
+            <td><strong>Granja Pedras</strong><br><small style="color:var(--cinza)">Sra. Carolina Plácido Correa Bastos</small></td>
+            <td>Santo Amaro</td>
+            <td><span class="badge ok">✓ Licença OK</span></td>
+            <td style="font-size:12px;color:#bdd8ca;">Acompanhamento das condicionantes vigentes</td>
+            <td><span class="badge atencao">Alta</span></td>
+            <td><span class="badge urgente">✗ Não</span></td>
+          </tr>
+          <tr>
+            <td><span class="unit-num">2</span></td>
+            <td><strong>Granja Vitória</strong><br><small style="color:var(--cinza)">Geraldo da Cruz Bastos</small></td>
+            <td>Conceição da Feira</td>
+            <td><span class="badge atencao">⚠ Protocolo Incompleto</span></td>
+            <td style="font-size:12px;color:#bdd8ca;">Ir ao Município — verificar se protocolo foi arquivado ou pode ser continuado. Possível necessidade de novo protocolo.</td>
+            <td><span class="badge urgente">Alta</span></td>
+            <td><span class="badge ok">✓ Sim</span></td>
+          </tr>
+          <tr>
+            <td><span class="unit-num">3</span></td>
+            <td><strong>Granja Carolina</strong><br><small style="color:var(--cinza)">Raimundo da Cruz Bastos</small></td>
+            <td>Conceição da Feira</td>
+            <td><span class="badge urgente">🔴 Licença Vencida (2019)</span></td>
+            <td style="font-size:12px;color:#bdd8ca;">Renovação obrigatória + atendimento de condicionantes. Entrar nova licença e planejar condicionantes.</td>
+            <td><span class="badge urgente">Alta</span></td>
+            <td><span class="badge ok">✓ Sim</span></td>
+          </tr>
+          <tr>
+            <td><span class="unit-num">4</span></td>
+            <td><strong>Espólio</strong><br><small style="color:var(--cinza)">Raimundo da Cruz Bastos</small></td>
+            <td>Conceição da Feira</td>
+            <td><span class="badge atencao">⚠ Protocolo INEMA (2019)</span></td>
+            <td style="font-size:12px;color:#bdd8ca;">Verificar status no INEMA. Alta probabilidade de estar arquivado — necessidade de novo protocolo com análise completa.</td>
+            <td><span class="badge urgente">Alta</span></td>
+            <td><span class="badge ok">✓ Sim</span></td>
+          </tr>
+          <tr>
+            <td><span class="unit-num">5</span></td>
+            <td><strong>Granja Carolina (2)</strong><br><small style="color:var(--cinza)">Carolina Plácido Corrêa Bastos</small></td>
+            <td>Feira de Santana</td>
+            <td><span class="badge atencao">⚠ Protocolo Unif. 2024</span></td>
+            <td style="font-size:12px;color:#bdd8ca;">Verificar status — sem movimentação desde abertura em 2024. Risco de arquivamento. Vários documentos solicitados em aberto.</td>
+            <td><span class="badge urgente">Alta</span></td>
+            <td><span class="badge ok">✓ Sim</span></td>
+          </tr>
+          <tr style="background:rgba(232,160,32,0.06);">
+            <td><span class="unit-num" style="color:var(--ouro-claro)">6</span></td>
+            <td><strong>Frigorífico C&amp;M / Frango ESSE</strong><br><small style="color:var(--cinza)">INDUSTRIA E COMERCIO DE ALIMENTOS LTDA</small></td>
+            <td>Feira de Santana</td>
+            <td><span class="badge ok" style="background:rgba(232,160,32,0.2);color:var(--ouro-claro);border-color:rgba(232,160,32,0.4);">🏆 Licença Válida (4 anos)</span></td>
+            <td style="font-size:12px;color:#bdd8ca;"><strong style="color:var(--ouro-claro)">34 CONDICIONANTES</strong> para atender no período de vigência. Gerenciamento técnico necessário.</td>
+            <td><span class="badge urgente">Alta</span></td>
+            <td><span class="badge ok">✓ Sim</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="grid-3" style="margin-top:24px;">
+      <div class="kpi-card vermelho">
+        <div class="kpi-icon">🚨</div>
+        <div class="kpi-label">Licenças Vencidas</div>
+        <div class="kpi-value vermelho">1</div>
+        <div class="kpi-sub">Granja 3 — desde 2019</div>
+      </div>
+      <div class="kpi-card amarelo">
+        <div class="kpi-icon">📝</div>
+        <div class="kpi-label">Protocolos Pendentes</div>
+        <div class="kpi-value amarelo">3</div>
+        <div class="kpi-sub">Unidades 2, 4 e 5</div>
+      </div>
+      <div class="kpi-card verde">
+        <div class="kpi-icon">🏆</div>
+        <div class="kpi-label">Unidades Conformes</div>
+        <div class="kpi-value verde">2</div>
+        <div class="kpi-sub">Granjas 1 e Frigorífico 6</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ ABA: ETAPA 1 — DIAGNÓSTICO ============ -->
+  <div class="tab-panel" id="panel-etapa1">
+    <div class="section-header">
+      <h2>Etapa 1 — <span>Visitas de Diagnóstico</span></h2>
+      <p>Metodologia, entregáveis e passo a passo para levantamento in loco</p>
+    </div>
+    <div class="section-divider"></div>
+
+    <div class="grid-2">
+      <!-- METODOLOGIA -->
+      <div class="card">
+        <div class="card-title">🔬 Metodologia de Diagnóstico</div>
+        <div class="timeline">
+          <div class="timeline-item">
+            <div class="timeline-dot filled"></div>
+            <div class="timeline-phase">1. Mobilização e Planejamento</div>
+            <div class="timeline-desc">Revisão documental prévia, agendamento de visitas, preparação de checklists específicos por tipo de instalação (granja avícola / frigorífico).</div>
+            <span class="timeline-date">Semana 1</span>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-dot filled"></div>
+            <div class="timeline-phase">2. Visitas de Campo (5 unidades)</div>
+            <div class="timeline-desc">Inspeção técnica presencial, coleta fotográfica georreferenciada, entrevistas com responsáveis, análise das condições de operação vs. condicionantes.</div>
+            <span class="timeline-date">Semanas 2–4</span>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-dot"></div>
+            <div class="timeline-phase">3. Análise Documental e Regulatória</div>
+            <div class="timeline-desc">Consultas junto ao INEMA, prefeituras (Conceição da Feira, Feira de Santana, Santo Amaro), análise dos protocolos e prazos de validade.</div>
+            <span class="timeline-date">Semanas 3–5</span>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-dot"></div>
+            <div class="timeline-phase">4. Matriz de Risco e Priorização</div>
+            <div class="timeline-desc">Classificação de riscos por unidade (probabilidade x impacto), definição de prioridades e sequenciamento de regularização.</div>
+            <span class="timeline-date">Semana 5–6</span>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-dot ouro"></div>
+            <div class="timeline-phase">5. Relatório de Diagnóstico + Plano de Ação</div>
+            <div class="timeline-desc">Entregável executivo com situação atual de cada unidade, gaps identificados, cronograma de regularização e estimativa de investimentos.</div>
+            <span class="timeline-date">Semana 6–7</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- ENTREGÁVEIS -->
+      <div class="card">
+        <div class="card-title">📦 Entregáveis da Etapa 1</div>
+        <div class="checklist-item">
+          <div class="check-box checked" onclick="toggleCheck(this)"></div>
+          <div class="checklist-text">
+            <div class="checklist-title">Relatório de Diagnóstico Ambiental (RDA)</div>
+            <div class="checklist-sub">Situação regulatória completa de todas as 6 unidades, com fotos, mapas e análise documental</div>
+          </div>
+        </div>
+        <div class="checklist-item">
+          <div class="check-box" onclick="toggleCheck(this)"></div>
+          <div class="checklist-text">
+            <div class="checklist-title">Matriz de Conformidade Legal</div>
+            <div class="checklist-sub">Cruzamento entre legislação aplicável (PNRS, CONAMA, INEMA) e situação atual de cada unidade</div>
+          </div>
+        </div>
+        <div class="checklist-item">
+          <div class="check-box" onclick="toggleCheck(this)"></div>
+          <div class="checklist-text">
+            <div class="checklist-title">Plano de Ação Priorizado</div>
+            <div class="checklist-sub">Roadmap de regularização com cronograma, responsáveis e estimativas de custo por unidade</div>
+          </div>
+        </div>
+        <div class="checklist-item">
+          <div class="check-box" onclick="toggleCheck(this)"></div>
+          <div class="checklist-text">
+            <div class="checklist-title">Laudo Fotográfico Georreferenciado</div>
+            <div class="checklist-sub">Registro visual padronizado de todas as visitas com coordenadas GPS</div>
+          </div>
+        </div>
+        <div class="checklist-item">
+          <div class="check-box" onclick="toggleCheck(this)"></div>
+          <div class="checklist-text">
+            <div class="checklist-title">Painel de Status das Licenças (Dashboard)</div>
+            <div class="checklist-sub">Ferramenta de acompanhamento digital, atualizada em tempo real</div>
+          </div>
+        </div>
+        <div class="checklist-item">
+          <div class="check-box" onclick="toggleCheck(this)"></div>
+          <div class="checklist-text">
+            <div class="checklist-title">Apresentação Executiva para Diretoria</div>
+            <div class="checklist-sub">Síntese estratégica do diagnóstico — formato board/gestão</div>
+          </div>
+        </div>
+
+        <div style="margin-top:16px;padding:14px;background:rgba(64,145,108,0.12);border-radius:var(--radius-sm);border:1px solid rgba(64,145,108,0.25);">
+          <div style="font-size:12px;color:var(--verde-suave);font-weight:700;margin-bottom:6px;">⚙️ SOFTWARES E FERRAMENTAS UTILIZADAS</div>
+          <div style="font-size:12px;color:var(--cinza);line-height:1.8;">
+            ArcGIS / QGIS (georref.) · AuditSec (checklist) · AutoCAD (plantas) · SIMLAM-BA (protocolos INEMA) · SEI (protocolos municipais)
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- MATRIZ DE RISCO -->
+    <div class="card">
+      <div class="card-title">⚠️ Matriz de Risco — Unidades Frango ESSE</div>
+      <div class="risk-item">
+        <div class="risk-dot alto"></div>
+        <div class="risk-text"><strong>Granja 3 — Licença Vencida desde 2019:</strong> Operação irregular há 5+ anos. Risco de autuação pelo INEMA/Municipal com embargo imediato. Passivo ambiental elevado.</div>
+        <div class="risk-nivel alto">RISCO ALTO</div>
+      </div>
+      <div class="risk-item">
+        <div class="risk-dot alto"></div>
+        <div class="risk-text"><strong>Espólio Granja 4 — Protocolo INEMA arquivado:</strong> Operação provavelmente sem qualquer amparo legal. Situação jurídica complexa por ser espólio.</div>
+        <div class="risk-nivel alto">RISCO ALTO</div>
+      </div>
+      <div class="risk-item">
+        <div class="risk-dot medio"></div>
+        <div class="risk-text"><strong>Granja 5 — Protocolo 2024 sem movimentação:</strong> Processo em risco de arquivamento. Documentos pendentes não entregues ao órgão ambiental.</div>
+        <div class="risk-nivel medio">RISCO MÉDIO</div>
+      </div>
+      <div class="risk-item">
+        <div class="risk-dot medio"></div>
+        <div class="risk-text"><strong>Granja 2 — Protocolo Municipal incompleto:</strong> Pendência administrativa. Risco de ter que recomeçar o processo e pagar taxas novamente.</div>
+        <div class="risk-nivel medio">RISCO MÉDIO</div>
+      </div>
+      <div class="risk-item">
+        <div class="risk-dot medio"></div>
+        <div class="risk-text"><strong>Frigorífico Unidade 6 — 34 condicionantes:</strong> Licença válida, mas condicionantes não cumpridas podem resultar em cassação da licença ou embargo parcial.</div>
+        <div class="risk-nivel medio">RISCO MÉDIO</div>
+      </div>
+      <div class="risk-item">
+        <div class="risk-dot baixo"></div>
+        <div class="risk-text"><strong>Granja 1 — Licença OK:</strong> Situação regular. Risco residual no acompanhamento de condicionantes existentes.</div>
+        <div class="risk-nivel baixo">RISCO BAIXO</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ ABA: ETAPA 2 — CONDICIONANTES ============ -->
+  <div class="tab-panel" id="panel-etapa2">
+    <div class="section-header">
+      <h2>Etapa 2 — <span>Gerenciamento das Condicionantes</span></h2>
+      <p>Metodologia de acompanhamento das 34 condicionantes do Frigorífico e regularização das granjas</p>
+    </div>
+    <div class="section-divider"></div>
+
+    <div class="grid-4" style="margin-bottom:24px;">
+      <div class="kpi-card ouro">
+        <div class="kpi-icon">📋</div>
+        <div class="kpi-label">Condicionantes Frigorífico</div>
+        <div class="kpi-value ouro">34</div>
+        <div class="kpi-sub">Licença válida — 4 anos</div>
+      </div>
+      <div class="kpi-card verde">
+        <div class="kpi-label">Frequência de Monitoramento</div>
+        <div class="kpi-value verde" style="font-size:22px;">Mensal</div>
+        <div class="kpi-sub">Relatório de conformidade</div>
+      </div>
+      <div class="kpi-card azul">
+        <div class="kpi-label">Prazo de Regularização</div>
+        <div class="kpi-value azul" style="font-size:20px;">12–24m</div>
+        <div class="kpi-sub">Licenças vencidas / pendentes</div>
+      </div>
+      <div class="kpi-card vermelho">
+        <div class="kpi-label">Unidades sem Licença Válida</div>
+        <div class="kpi-value vermelho">4</div>
+        <div class="kpi-sub">Granjas 2, 3, 4 e 5</div>
+      </div>
+    </div>
+
+    <!-- CATEGORIAS DE CONDICIONANTES -->
+    <div class="card" style="margin-bottom:24px;">
+      <div class="card-title">🗂️ Categorias Típicas de Condicionantes — Frigorífico de Aves (Bahia)</div>
+      <div class="grid-3">
+        <div style="padding:14px;background:rgba(64,145,108,0.1);border-radius:var(--radius-sm);border:1px solid rgba(64,145,108,0.2);">
+          <div style="font-family:'Montserrat',sans-serif;font-weight:700;font-size:13px;color:var(--verde-suave);margin-bottom:10px;">🌊 Recursos Hídricos</div>
+          <div style="font-size:12.5px;color:#bdd8ca;line-height:1.8;">
+            · Outorga de uso da água<br>
+            · Sistema de tratamento de efluentes (ETE)<br>
+            · Monitoramento de qualidade hídrica<br>
+            · Autodeclaração de efluentes (SINFAUNE)
+          </div>
+        </div>
+        <div style="padding:14px;background:rgba(64,145,108,0.1);border-radius:var(--radius-sm);border:1px solid rgba(64,145,108,0.2);">
+          <div style="font-family:'Montserrat',sans-serif;font-weight:700;font-size:13px;color:var(--verde-suave);margin-bottom:10px;">♻️ Resíduos Sólidos</div>
+          <div style="font-size:12.5px;color:#bdd8ca;line-height:1.8;">
+            · Plano de Gerenciamento de Resíduos (PGRS)<br>
+            · Logística reversa de embalagens<br>
+            · Destinação de resíduos de abate<br>
+            · MTR digital — SIGOR/SINIR
+          </div>
+        </div>
+        <div style="padding:14px;background:rgba(64,145,108,0.1);border-radius:var(--radius-sm);border:1px solid rgba(64,145,108,0.2);">
+          <div style="font-family:'Montserrat',sans-serif;font-weight:700;font-size:13px;color:var(--verde-suave);margin-bottom:10px;">💨 Qualidade do Ar</div>
+          <div style="font-size:12.5px;color:#bdd8ca;line-height:1.8;">
+            · Inventário de emissões atmosféricas<br>
+            · Monitoramento de odor (granja e frigorífico)<br>
+            · Controle de bioaerossóis<br>
+            · Laudos de chaminé / caldeiras
+          </div>
+        </div>
+        <div style="padding:14px;background:rgba(64,145,108,0.1);border-radius:var(--radius-sm);border:1px solid rgba(64,145,108,0.2);">
+          <div style="font-family:'Montserrat',sans-serif;font-weight:700;font-size:13px;color:var(--verde-suave);margin-bottom:10px;">🌱 Flora e Solo</div>
+          <div style="font-size:12.5px;color:#bdd8ca;line-height:1.8;">
+            · Supressão vegetal e compensação<br>
+            · Recuperação de APP<br>
+            · Controle de erosão<br>
+            · Plantio compensatório
+          </div>
+        </div>
+        <div style="padding:14px;background:rgba(64,145,108,0.1);border-radius:var(--radius-sm);border:1px solid rgba(64,145,108,0.2);">
+          <div style="font-family:'Montserrat',sans-serif;font-weight:700;font-size:13px;color:var(--verde-suave);margin-bottom:10px;">🐦 Fauna e Bem-Estar Animal</div>
+          <div style="font-size:12.5px;color:#bdd8ca;line-height:1.8;">
+            · Programa de afugentamento de fauna<br>
+            · Controle de vetores e pragas<br>
+            · Laudo de bem-estar animal (MAPA)<br>
+            · Mortandade e destinação de carcaças
+          </div>
+        </div>
+        <div style="padding:14px;background:rgba(64,145,108,0.1);border-radius:var(--radius-sm);border:1px solid rgba(64,145,108,0.2);">
+          <div style="font-family:'Montserrat',sans-serif;font-weight:700;font-size:13px;color:var(--verde-suave);margin-bottom:10px;">📊 Programas e Relatórios</div>
+          <div style="font-size:12.5px;color:#bdd8ca;line-height:1.8;">
+            · Programa de Comunicação Social (PCS)<br>
+            · Relatório Ambiental Anual (RAA)<br>
+            · Treinamentos de equipe (NR-12, NR-20)<br>
+            · Plano de Emergência Ambiental (PEA)
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PASSO A PASSO DO GERENCIAMENTO -->
+    <div class="section-header" style="margin-top:8px;">
+      <h2 style="font-size:18px;">Passo a Passo — <span>Gerenciamento de Condicionantes</span></h2>
+    </div>
+    <div class="grid-3">
+      <div class="step-box">
+        <div class="step-number">1</div>
+        <div class="step-title">Levantamento e Classificação</div>
+        <div class="step-desc">Catalogar todas as 34 condicionantes por tema, prazo e complexidade. Criar planilha mestre com status, responsável técnico e evidências exigidas pelo INEMA.</div>
+        <span class="step-duration">⏱ Semana 1–2</span>
+      </div>
+      <div class="step-box">
+        <div class="step-number">2</div>
+        <div class="step-title">Priorização por Prazo e Risco</div>
+        <div class="step-desc">Aplicar matriz de prioridade (prazo + risco de embargo). Condicionantes com prazo <90 dias entram em modo de execução imediata.</div>
+        <span class="step-duration">⏱ Semana 2</span>
+      </div>
+      <div class="step-box">
+        <div class="step-number">3</div>
+        <div class="step-title">Elaboração dos Estudos Técnicos</div>
+        <div class="step-desc">PGRS, PEA, PCS, Inventário de Emissões, RAA e demais documentos exigidos como evidência de atendimento das condicionantes.</div>
+        <span class="step-duration">⏱ Meses 1–4</span>
+      </div>
+      <div class="step-box">
+        <div class="step-number">4</div>
+        <div class="step-title">Execução e Implantação</div>
+        <div class="step-desc">Acompanhamento de obras, instalações e programas ambientais. Visitas mensais para verificação de progresso e coleta de evidências fotográficas e laboratoriais.</div>
+        <span class="step-duration">⏱ Meses 2–18</span>
+      </div>
+      <div class="step-box">
+        <div class="step-number">5</div>
+        <div class="step-title">Protocolo de Evidências no INEMA</div>
+        <div class="step-desc">Protocolar documentos, fotos, laudos e relatórios no sistema SIMLAM-BA. Acompanhar tramitação e responder a questionamentos do órgão ambiental.</div>
+        <span class="step-duration">⏱ Contínuo</span>
+      </div>
+      <div class="step-box">
+        <div class="step-number">6</div>
+        <div class="step-title">Relatório de Conformidade e Dashboard</div>
+        <div class="step-desc">Emissão mensal do Relatório de Conformidade Ambiental (RCA) para o cliente, com % de condicionantes atendidas, alertas e próximas ações.</div>
+        <span class="step-duration">⏱ Mensal</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ ABA: CRONOGRAMA ============ -->
+  <div class="tab-panel" id="panel-cronograma">
+    <div class="section-header">
+      <h2>Cronograma do <span>Projeto</span></h2>
+      <p>Planejamento macro — fases, entregas e marcos críticos</p>
+    </div>
+    <div class="section-divider"></div>
+
+    <div class="card" style="margin-bottom:24px;">
+      <div class="card-title">📅 Fases e Marcos do Projeto</div>
+      <div style="overflow-x:auto;">
+        <table style="min-width:700px;">
+          <thead>
+            <tr>
+              <th>Fase</th>
+              <th>Atividade Principal</th>
+              <th>Prazo</th>
+              <th>Entregável</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td><strong style="color:var(--verde-suave)">Kick-off</strong></td><td>Assinatura de contrato, reunião inicial, coleta de documentos</td><td>Semana 1</td><td>Cronograma detalhado + checklist</td><td><span class="badge pendente">Em negociação</span></td></tr>
+            <tr><td><strong style="color:var(--verde-suave)">Etapa 1-A</strong></td><td>Visitas às granjas (Unidades 2, 3, 4, 5)</td><td>Semanas 2–4</td><td>Relatório de campo por unidade</td><td><span class="badge pendente">Aguardando</span></td></tr>
+            <tr><td><strong style="color:var(--verde-suave)">Etapa 1-B</strong></td><td>Visita ao Frigorífico C&amp;M (Unidade 6)</td><td>Semana 3</td><td>Mapeamento das 34 condicionantes</td><td><span class="badge pendente">Aguardando</span></td></tr>
+            <tr><td><strong style="color:var(--verde-suave)">Etapa 1-C</strong></td><td>Consultas ao INEMA e prefeituras</td><td>Semanas 3–5</td><td>Status oficial dos protocolos</td><td><span class="badge pendente">Aguardando</span></td></tr>
+            <tr><td><strong style="color:var(--ouro-claro)">Marco 1</strong></td><td>Entrega do Relatório de Diagnóstico Final</td><td>Semana 7</td><td>RDA completo + apresentação diretoria</td><td><span class="badge pendente">Aguardando</span></td></tr>
+            <tr><td><strong style="color:var(--verde-suave)">Etapa 2-A</strong></td><td>Regularização das licenças vencidas/pendentes (Granjas 2,3,4,5)</td><td>Meses 2–8</td><td>Protocolos abertos e em andamento</td><td><span class="badge pendente">Aguardando</span></td></tr>
+            <tr><td><strong style="color:var(--verde-suave)">Etapa 2-B</strong></td><td>Elaboração de estudos técnicos (PGRS, PEA, PCS, RAA)</td><td>Meses 2–5</td><td>Documentos protocolados no INEMA</td><td><span class="badge pendente">Aguardando</span></td></tr>
+            <tr><td><strong style="color:var(--verde-suave)">Etapa 2-C</strong></td><td>Gerenciamento mensal das 34 condicionantes do Frigorífico</td><td>Meses 1–48</td><td>RCA mensal + dashboard atualizado</td><td><span class="badge pendente">Aguardando</span></td></tr>
+            <tr><td><strong style="color:var(--ouro-claro)">Marco 2</strong></td><td>Obtenção de licenças para granjas prioritárias (2 e 3)</td><td>Mês 8–12</td><td>Licenças emitidas pelos órgãos</td><td><span class="badge pendente">Aguardando</span></td></tr>
+            <tr><td><strong style="color:var(--ouro-claro)">Marco 3</strong></td><td>50% das condicionantes do Frigorífico atendidas</td><td>Mês 12</td><td>Protocolo de evidências no SIMLAM</td><td><span class="badge pendente">Aguardando</span></td></tr>
+            <tr><td><strong style="color:var(--ouro-claro)">Marco 4</strong></td><td>100% das condicionantes do Frigorífico atendidas</td><td>Mês 36–48</td><td>Renovação de Licença de Operação</td><td><span class="badge pendente">Aguardando</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- PROGRESSO SIMULADO -->
+    <div class="grid-2">
+      <div class="card">
+        <div class="card-title">📊 Progresso Geral do Projeto</div>
+        <div class="progress-bar-wrap">
+          <div class="progress-label"><span>Diagnóstico (Etapa 1)</span><span>0%</span></div>
+          <div class="progress-bar"><div class="progress-fill verde" style="width:0%"></div></div>
+        </div>
+        <div class="progress-bar-wrap">
+          <div class="progress-label"><span>Regularização de Licenças</span><span>0%</span></div>
+          <div class="progress-bar"><div class="progress-fill ouro" style="width:0%"></div></div>
+        </div>
+        <div class="progress-bar-wrap">
+          <div class="progress-label"><span>Condicionantes Frigorífico (34)</span><span>0%</span></div>
+          <div class="progress-bar"><div class="progress-fill vermelho" style="width:0%"></div></div>
+        </div>
+        <div style="margin-top:16px;padding:12px;background:rgba(64,145,108,0.1);border-radius:8px;font-size:12px;color:var(--cinza);text-align:center;">
+          Progresso será atualizado após início do projeto
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title">🗓️ Calendário de Visitas Planejadas</div>
+        <div class="risk-item">
+          <div class="risk-dot medio"></div>
+          <div class="risk-text"><strong>Granja 2</strong> — Conceição da Feira — Verificação protocolo municipal</div>
+          <div class="risk-nivel medio">V1</div>
+        </div>
+        <div class="risk-item">
+          <div class="risk-dot alto"></div>
+          <div class="risk-text"><strong>Granja 3</strong> — Conceição da Feira — Licença vencida + condicionantes</div>
+          <div class="risk-nivel alto">V2</div>
+        </div>
+        <div class="risk-item">
+          <div class="risk-dot alto"></div>
+          <div class="risk-text"><strong>Granja 4</strong> — Conceição da Feira — Status protocolo INEMA</div>
+          <div class="risk-nivel alto">V3</div>
+        </div>
+        <div class="risk-item">
+          <div class="risk-dot medio"></div>
+          <div class="risk-text"><strong>Granja 5</strong> — Feira de Santana — Protocolo unificado 2024</div>
+          <div class="risk-nivel medio">V4</div>
+        </div>
+        <div class="risk-item">
+          <div class="risk-dot baixo"></div>
+          <div class="risk-text"><strong>Frigorífico</strong> — Feira de Santana — Mapeamento das 34 condicionantes</div>
+          <div class="risk-nivel baixo">V5</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ ABA: PRECIFICAÇÃO ============ -->
+  <div class="tab-panel" id="panel-precificacao">
+    <div class="section-header">
+      <h2>Precificação <span>Estratégica</span></h2>
+      <p>Referências de mercado e proposta de valor — Consultoria Ambiental no segmento avícola</p>
+    </div>
+    <div class="section-divider"></div>
+
+    <div class="alert atencao" style="margin-bottom:24px;">
+      <div class="alert-icon">💡</div>
+      <div class="alert-text">Os valores abaixo são referências de mercado praticadas por consultorias ambientais no Nordeste (BA, PE, CE) para projetos similares — frigoríficos e granjas avícolas com 4–8 unidades. Ajuste conforme complexidade operacional, escopo final e capacidade de pagamento do cliente.</div>
+    </div>
+
+    <!-- ETAPA 1 -->
+    <div class="section-header">
+      <h2 style="font-size:16px;">Etapa 1 — <span>Visitas de Diagnóstico</span></h2>
+    </div>
+    <div class="grid-3" style="margin-bottom:32px;">
+      <div class="price-tier">
+        <div class="price-tier-label" style="color:var(--cinza)">Conservador / Entrada</div>
+        <div class="price-value">R$ 18.000</div>
+        <div class="price-period">pagamento único · entrega em 45 dias</div>
+        <ul class="price-features">
+          <li>5 visitas de campo (1 dia cada)</li>
+          <li>Relatório de diagnóstico simplificado</li>
+          <li>Matriz de conformidade básica</li>
+          <li>Plano de ação</li>
+          <li>1 reunião de apresentação</li>
+        </ul>
+      </div>
+      <div class="price-tier destaque">
+        <div class="price-tier-label" style="color:var(--ouro-claro)">Padrão de Mercado</div>
+        <div class="price-value">R$ 32.000</div>
+        <div class="price-period">pagamento em 2x · entrega em 45 dias</div>
+        <ul class="price-features">
+          <li>5 visitas de campo (1–2 dias cada)</li>
+          <li>Relatório executivo completo (RDA)</li>
+          <li>Laudo fotográfico georreferenciado</li>
+          <li>Consultas ao INEMA e prefeituras</li>
+          <li>Dashboard digital de status</li>
+          <li>Apresentação para diretoria</li>
+          <li>Plano de ação priorizado com custos</li>
+        </ul>
+      </div>
+      <div class="price-tier">
+        <div class="price-tier-label" style="color:var(--verde-suave)">Premium / Full Service</div>
+        <div class="price-value">R$ 55.000</div>
+        <div class="price-period">pagamento em 3x · entrega em 60 dias</div>
+        <ul class="price-features">
+          <li>Tudo do padrão +</li>
+          <li>Análise laboratorial de efluentes</li>
+          <li>Levantamento ART/RRT de responsável</li>
+          <li>Protocolo de documentos nos órgãos</li>
+          <li>Roadmap de investimentos ambientais</li>
+          <li>2 workshops internos com equipe ESSE</li>
+          <li>Suporte por 90 dias pós-entrega</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- ETAPA 2 -->
+    <div class="section-header">
+      <h2 style="font-size:16px;">Etapa 2 — <span>Gerenciamento de Condicionantes (Retainer Mensal)</span></h2>
+    </div>
+    <div class="grid-3" style="margin-bottom:32px;">
+      <div class="price-tier">
+        <div class="price-tier-label" style="color:var(--cinza)">Essencial</div>
+        <div class="price-value">R$ 4.500<span style="font-size:16px;font-weight:400;color:var(--cinza)">/mês</span></div>
+        <div class="price-period">contrato mínimo 12 meses</div>
+        <ul class="price-features">
+          <li>Acompanhamento das condicionantes do Frigorífico</li>
+          <li>1 visita mensal</li>
+          <li>Relatório de conformidade mensal</li>
+          <li>Suporte por e-mail</li>
+        </ul>
+      </div>
+      <div class="price-tier destaque">
+        <div class="price-tier-label" style="color:var(--ouro-claro)">Completo (Recomendado)</div>
+        <div class="price-value">R$ 9.800<span style="font-size:16px;font-weight:400;color:var(--cinza)">/mês</span></div>
+        <div class="price-period">contrato 24 meses · inclui regularização das granjas</div>
+        <ul class="price-features">
+          <li>Gerenciamento das 34 condicionantes do Frigorífico</li>
+          <li>Regularização de licenças — Granjas 2, 3, 4 e 5</li>
+          <li>2 visitas mensais (frigorífico + granjas)</li>
+          <li>Elaboração de PGRS, PEA, PCS, RAA</li>
+          <li>Protocolo de documentos no INEMA</li>
+          <li>Dashboard atualizado mensalmente</li>
+          <li>Suporte para fiscalizações e auditorias</li>
+        </ul>
+      </div>
+      <div class="price-tier">
+        <div class="price-tier-label" style="color:var(--verde-suave)">Executive + ESG</div>
+        <div class="price-value">R$ 18.500<span style="font-size:16px;font-weight:400;color:var(--cinza)">/mês</span></div>
+        <div class="price-period">contrato 36 meses · gestão ambiental completa</div>
+        <ul class="price-features">
+          <li>Tudo do Completo +</li>
+          <li>Relatório ESG anual (GRI 306)</li>
+          <li>Inventário de emissões GEE</li>
+          <li>Gestão de crédito de carbono potencial</li>
+          <li>Suporte ISO 14001 / ISO 22000</li>
+          <li>Gerente ambiental exclusivo on-call</li>
+          <li>Monitoramento contínuo de efluentes</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- ROI / ARGUMENTO FINANCEIRO -->
+    <div class="card">
+      <div class="card-title">💡 Argumento de Valor — ROI da Regularização Ambiental</div>
+      <div class="grid-2">
+        <div>
+          <div style="font-size:13px;color:#bdd8ca;line-height:2;">
+            <div style="display:flex;justify-content:space-between;border-bottom:1px solid rgba(64,145,108,0.1);padding:6px 0;"><span>Multa INEMA por operação irregular (Granja 3)</span><span style="color:#e74c3c;font-weight:700;">R$ 50K–500K</span></div>
+            <div style="display:flex;justify-content:space-between;border-bottom:1px solid rgba(64,145,108,0.1);padding:6px 0;"><span>Embargo temporário do Frigorífico</span><span style="color:#e74c3c;font-weight:700;">R$ 200K–2M+</span></div>
+            <div style="display:flex;justify-content:space-between;border-bottom:1px solid rgba(64,145,108,0.1);padding:6px 0;"><span>Cassação de licença (paralisação total)</span><span style="color:#e74c3c;font-weight:700;">Inestimável</span></div>
+            <div style="display:flex;justify-content:space-between;border-bottom:1px solid rgba(64,145,108,0.1);padding:6px 0;"><span>Perda de clientes por não-conformidade ESG</span><span style="color:#e74c3c;font-weight:700;">Alto</span></div>
+            <div style="display:flex;justify-content:space-between;padding:8px 0;"><span style="color:var(--verde-suave);font-weight:700;">Investimento no Projeto (Etapas 1+2, 24 meses)</span><span style="color:var(--verde-suave);font-weight:700;">~R$ 266K</span></div>
+          </div>
+        </div>
+        <div style="background:rgba(64,145,108,0.12);border-radius:var(--radius-sm);padding:20px;border:1px solid rgba(64,145,108,0.25);">
+          <div style="font-family:'Montserrat',sans-serif;font-weight:700;font-size:14px;color:var(--verde-suave);margin-bottom:12px;">🎯 MENSAGEM PARA O CLIENTE</div>
+          <div style="font-size:13px;color:#bdd8ca;line-height:1.8;font-style:italic;">
+            "Com uma granja operando sem licença desde 2019, o risco de autuação pelo INEMA pode superar R$ 500 mil — sem contar o embargo da operação. O investimento na regularização ambiental é, na prática, um seguro de operação. Além disso, frigoríficos com certificação ESG acessam clientes premium, redes de varejo exigentes e linhas de crédito mais baratas. Regularizar não é custo — é proteção de receita."
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ ABA: BENCHMARK ============ -->
+  <div class="tab-panel" id="panel-benchmark">
+    <div class="section-header">
+      <h2>Benchmarks de <span>Mercado</span></h2>
+      <p>Melhores práticas e referências do setor — Consultoria Ambiental em Frigoríficos e Agroindústria</p>
+    </div>
+    <div class="section-divider"></div>
+
+    <div class="grid-2">
+      <!-- BENCHMARKS DE PRAZO -->
+      <div class="card">
+        <div class="card-title">⏱️ Benchmarks de Prazo — Licenciamento Avícola (BA)</div>
+        <div class="bench-row header"><span>Processo</span><span>Mín.</span><span>Médio</span><span>Máx.</span></div>
+        <div class="bench-row"><span>Licença Prévia (LP)</span><span>60 dias</span><span class="bench-highlight">90 dias</span><span>180 dias</span></div>
+        <div class="bench-row"><span>Licença de Instalação (LI)</span><span>90 dias</span><span class="bench-highlight">120 dias</span><span>240 dias</span></div>
+        <div class="bench-row"><span>Licença de Operação (LO)</span><span>30 dias</span><span class="bench-highlight">60 dias</span><span>120 dias</span></div>
+        <div class="bench-row"><span>Renovação de LO vencida</span><span>60 dias</span><span class="bench-highlight">120 dias</span><span>365 dias</span></div>
+        <div class="bench-row"><span>Licença Unificada (INEMA-BA)</span><span>90 dias</span><span class="bench-highlight">150 dias</span><span>365 dias</span></div>
+        <div class="bench-row"><span>Atendimento de condicionante técnica</span><span>30 dias</span><span class="bench-highlight">90 dias</span><span>180 dias</span></div>
+      </div>
+
+      <!-- BENCHMARKS DE CUSTO -->
+      <div class="card">
+        <div class="card-title">💰 Benchmarks de Custos — Projetos Similares</div>
+        <div class="bench-row header"><span>Serviço</span><span>Mercado BA</span><span>Referência</span><span>Categoria</span></div>
+        <div class="bench-row"><span>Diagnóstico ambiental (5–8 un.)</span><span>R$20K–50K</span><span class="bench-highlight">R$32K</span><span><span class="badge ok" style="font-size:10px">Etapa 1</span></span></div>
+        <div class="bench-row"><span>PGRS completo (frigorífico)</span><span>R$8K–25K</span><span class="bench-highlight">R$15K</span><span><span class="badge pendente" style="font-size:10px">Estudo</span></span></div>
+        <div class="bench-row"><span>PEA (Plano Emergência Amb.)</span><span>R$5K–15K</span><span class="bench-highlight">R$8K</span><span><span class="badge pendente" style="font-size:10px">Estudo</span></span></div>
+        <div class="bench-row"><span>Retainer gestão ambiental/mês</span><span>R$5K–20K</span><span class="bench-highlight">R$9,8K</span><span><span class="badge ok" style="font-size:10px">Etapa 2</span></span></div>
+        <div class="bench-row"><span>Relatório ESG anual</span><span>R$15K–60K</span><span class="bench-highlight">R$25K</span><span><span class="badge atencao" style="font-size:10px">Adicional</span></span></div>
+        <div class="bench-row"><span>ART/RRT responsável técnico</span><span>R$500–2K</span><span class="bench-highlight">R$1K</span><span><span class="badge pendente" style="font-size:10px">Custo</span></span></div>
+      </div>
+    </div>
+
+    <!-- MELHORES PRÁTICAS -->
+    <div class="card">
+      <div class="card-title">🏆 Melhores Práticas — Cases de Sucesso em Consultoria Ambiental Avícola</div>
+      <div class="grid-3">
+        <div style="padding:16px;background:rgba(64,145,108,0.1);border-radius:var(--radius-sm);border-left:3px solid var(--verde-claro);">
+          <div style="font-family:'Montserrat',sans-serif;font-weight:700;font-size:13px;color:var(--branco);margin-bottom:8px;">🗂️ Gestão Documental Centralizada</div>
+          <div style="font-size:12.5px;color:var(--cinza);line-height:1.7;">Uso de plataforma digital (GED) para centralizar todos os documentos, protocolos, laudos e evidências. Acesso do cliente em tempo real. Referência: consultorias que adotam esse modelo reportam 60% menos retrabalho.</div>
+        </div>
+        <div style="padding:16px;background:rgba(64,145,108,0.1);border-radius:var(--radius-sm);border-left:3px solid var(--ouro);">
+          <div style="font-family:'Montserrat',sans-serif;font-weight:700;font-size:13px;color:var(--branco);margin-bottom:8px;">📊 Dashboard de Condicionantes em Tempo Real</div>
+          <div style="font-size:12.5px;color:var(--cinza);line-height:1.7;">Manter painel digital com % de cumprimento de condicionantes, prazos e alertas de vencimento. Empresas como BRF e JBS adotam esse modelo para gerenciar 100+ condicionantes em múltiplas unidades.</div>
+        </div>
+        <div style="padding:16px;background:rgba(64,145,108,0.1);border-radius:var(--radius-sm);border-left:3px solid var(--azul);">
+          <div style="font-family:'Montserrat',sans-serif;font-weight:700;font-size:13px;color:var(--branco);margin-bottom:8px;">🔄 Ciclo PDCA Ambiental</div>
+          <div style="font-size:12.5px;color:var(--cinza);line-height:1.7;">Aplicação do ciclo PDCA (Plan, Do, Check, Act) no gerenciamento de condicionantes: planejamento mensal, execução com evidência, verificação em campo e ação corretiva. Referência ISO 14001.</div>
+        </div>
+        <div style="padding:16px;background:rgba(64,145,108,0.1);border-radius:var(--radius-sm);border-left:3px solid #5dade2;">
+          <div style="font-family:'Montserrat',sans-serif;font-weight:700;font-size:13px;color:var(--branco);margin-bottom:8px;">🤝 Relacionamento Proativo com Órgãos</div>
+          <div style="font-size:12.5px;color:var(--cinza);line-height:1.7;">Consultorias de alto desempenho mantêm relacionamento contínuo com analistas do INEMA e prefeituras, antecipaando questionamentos antes da formalização de exigências. Reduz prazo em até 40%.</div>
+        </div>
+        <div style="padding:16px;background:rgba(64,145,108,0.1);border-radius:var(--radius-sm);border-left:3px solid var(--verde-suave);">
+          <div style="font-family:'Montserrat',sans-serif;font-weight:700;font-size:13px;color:var(--branco);margin-bottom:8px;">🌱 Integração ESG desde o início</div>
+          <div style="font-size:12.5px;color:var(--cinza);line-height:1.7;">Posicionar o projeto de licenciamento como pilar da estratégia ESG do cliente — não apenas regularização. Abre portas para crédito verde, homologação em grandes redes e relatórios de sustentabilidade (GRI 306).</div>
+        </div>
+        <div style="padding:16px;background:rgba(64,145,108,0.1);border-radius:var(--radius-sm);border-left:3px solid var(--ouro-claro);">
+          <div style="font-family:'Montserrat',sans-serif;font-weight:700;font-size:13px;color:var(--branco);margin-bottom:8px;">📸 Evidências Fotográficas Sistemáticas</div>
+          <div style="font-size:12.5px;color:var(--cinza);line-height:1.7;">Protocolo de registro fotográfico com antes/depois para cada condicionante. Georreferenciamento e carimbo de data/hora. Padrão exigido pelo INEMA para comprovação de atendimento.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- LEGISLAÇÃO APLICÁVEL -->
+    <div class="card">
+      <div class="card-title">⚖️ Marco Regulatório Aplicável ao Projeto</div>
+      <div class="grid-2">
+        <div>
+          <div style="font-size:13px;color:#bdd8ca;line-height:2.2;">
+            <div style="border-bottom:1px solid rgba(64,145,108,0.1);padding:4px 0;">📌 <strong>Lei 12.305/2010</strong> — Política Nacional de Resíduos Sólidos (PNRS)</div>
+            <div style="border-bottom:1px solid rgba(64,145,108,0.1);padding:4px 0;">📌 <strong>Lei 9.605/1998</strong> — Lei de Crimes Ambientais</div>
+            <div style="border-bottom:1px solid rgba(64,145,108,0.1);padding:4px 0;">📌 <strong>Resolução CONAMA 430/2011</strong> — Efluentes líquidos</div>
+            <div style="border-bottom:1px solid rgba(64,145,108,0.1);padding:4px 0;">📌 <strong>Resolução CONAMA 357/2005</strong> — Qualidade das águas</div>
+            <div style="border-bottom:1px solid rgba(64,145,108,0.1);padding:4px 0;">📌 <strong>CONAMA 02/2012</strong> — Logística reversa (frigoríficos)</div>
+            <div style="padding:4px 0;">📌 <strong>Lei Federal 6.938/1981</strong> — Política Nacional do Meio Ambiente</div>
+          </div>
+        </div>
+        <div>
+          <div style="font-size:13px;color:#bdd8ca;line-height:2.2;">
+            <div style="border-bottom:1px solid rgba(64,145,108,0.1);padding:4px 0;">📌 <strong>Decreto Estadual BA 14.024/2012</strong> — Licenciamento ambiental BA</div>
+            <div style="border-bottom:1px solid rgba(64,145,108,0.1);padding:4px 0;">📌 <strong>Portaria INEMA 11.292/2012</strong> — Atividades sujeitas a licença</div>
+            <div style="border-bottom:1px solid rgba(64,145,108,0.1);padding:4px 0;">📌 <strong>Instrução Normativa MAPA 56/2007</strong> — Bem-estar aves</div>
+            <div style="border-bottom:1px solid rgba(64,145,108,0.1);padding:4px 0;">📌 <strong>Portaria MAPA 210/1998</strong> — Inspeção sanitária aves</div>
+            <div style="border-bottom:1px solid rgba(64,145,108,0.1);padding:4px 0;">📌 <strong>Resolução COEMA 04/2014</strong> — Padrões de qualidade ambiental BA</div>
+            <div style="padding:4px 0;">📌 <strong>ISO 14001:2015</strong> — Sistema de Gestão Ambiental</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+<!-- FOOTER -->
+<div class="dash-footer">
+  <span>Frango ESSE — Projeto Ambiental</span> · Dashboard Executivo de Gestão de Licenças &amp; Condicionantes · Confidencial<br>
+  <small>Desenvolvido para uso interno da consultoria ambiental · Dados baseados em diagnóstico preliminar</small>
+</div>
+
+<script>
+  // DATA
+  document.getElementById('headerDate').textContent = new Date().toLocaleDateString('pt-BR', {day:'2-digit',month:'long',year:'numeric'});
+
+  // TABS
+  function switchTab(id) {
+    document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById('panel-' + id).classList.add('active');
+    document.getElementById('tab-' + id).classList.add('active');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  // CHECKBOXES
+  function toggleCheck(el) {
+    el.classList.toggle('checked');
+    updateProgress();
+  }
+
+  function updateProgress() {
+    const total = document.querySelectorAll('.check-box').length;
+    const checked = document.querySelectorAll('.check-box.checked').length;
+    const pct = Math.round((checked / total) * 100);
+    const fills = document.querySelectorAll('.progress-fill.verde');
+    if (fills[0]) fills[0].style.width = pct + '%';
+  }
+
+  // ANIMATE BARS ON LOAD
+  window.addEventListener('load', () => {
+    const bars = document.querySelectorAll('.chart-bar-fill, .progress-fill');
+    bars.forEach(b => {
+      const w = b.style.width;
+      b.style.width = '0%';
+      setTimeout(() => { b.style.width = w; }, 300);
+    });
+  });
+</script>
+</body>
+</html>
